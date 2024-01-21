@@ -65,7 +65,7 @@ if st.button("Start Scraping"):
     st.download_button(
         label="Download Emails and URLs as CSV",
         data=csv_data,
-        file_name='Url_email.csv',
+        file_name='EmailEagle.csv',
         mime='text/csv',
         key='download-csv'
     )
