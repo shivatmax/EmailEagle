@@ -49,7 +49,7 @@ def convert_to_csv(data):
     return pd.DataFrame(data).to_csv(index=False).encode('utf-8')
 
 # Streamlit interface
-st.title("EmailEagle - Best Email and URL Scraper")
+st.title("EmailEagle - Best Email & contact Scraper")
 user_url = st.text_input("Enter Main Target URL To Scan:")
 max_urls = st.text_input("Enter max_sub urls: (people normally use: 50)")
 
