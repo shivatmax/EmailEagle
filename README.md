@@ -23,34 +23,6 @@
 </p>
 <hr>
 
-##  Quick Links
-
-> - [ Overview](#-overview)
-> - [ Features](#-features)
-> - [ Repository Structure](#-repository-structure)
-> - [ Modules](#-modules)
-> - [ Getting Started](#-getting-started)
->   - [ Installation](#-installation)
->   - [ Running EmailEagle](#-running-EmailEagle)
->   - [ Tests](#-tests)
-> - [ Project Roadmap](#-project-roadmap)
-> - [ Contributing](#-contributing)
-> - [ License](#-license)
-> - [ Acknowledgments](#-acknowledgments)
-
----
-
-##  Overview
-
-<code>► INSERT-TEXT-HERE</code>
-
----
-
-##  Features
-
-<code>► INSERT-TEXT-HERE</code>
-
----
 
 ##  Repository Structure
 
@@ -66,10 +38,6 @@
 
 <details closed><summary>.</summary>
 
-| File                                                                                     | Summary                         |
-| ---                                                                                      | ---                             |
-| [emaileagle.py](https://github.com/shivatmax/EmailEagle/blob/master/emaileagle.py)       | <code>► INSERT-TEXT-HERE</code> |
-| [requirements.txt](https://github.com/shivatmax/EmailEagle/blob/master/requirements.txt) | <code>► INSERT-TEXT-HERE</code> |
 
 </details>
 
@@ -108,26 +76,8 @@ pip install -r requirements.txt
 Use the following command to run EmailEagle:
 
 ```sh
-python main.py
+streamlit run emaileagle.py
 ```
-
-###  Tests
-
-To execute tests, run:
-
-```sh
-pytest
-```
-
----
-
-##  Project Roadmap
-
-- [X] `► INSERT-TASK-1`
-- [ ] `► INSERT-TASK-2`
-- [ ] `► ...`
-
----
 
 ##  Contributing
 
