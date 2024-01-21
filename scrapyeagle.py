@@ -28,7 +28,7 @@ def scrape_emails_contacts_and_urls(user_url, max_urls=50):
         except (requests.exceptions.MissingSchema, requests.exceptions.ConnectionError):
             continue
         new_emails = set(re.findall(r"[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", response.text, re.I))
-        new_contacts = set(re.findall(r"/\(([0-9]{3})\)([ .-]?)([0-9]{3})\2([0-9]{4})|([0-9]{3})([ .-]?)([0-9]{3})\5([0-9]{4})/", response.text))
+        new_contacts = set(re.findall(r"\(([0-9]{3})\)([ .-]?)([0-9]{3})\2([0-9]{4})|([0-9]{3})([ .-]?)([0-9]{3})\5([0-9]{4})", response.text))
         emails.update(new_emails)
         contacts.update(new_contacts)
         soup = BeautifulSoup(response.text, features="lxml")
