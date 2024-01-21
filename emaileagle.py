@@ -8,10 +8,9 @@ import re
 from bs4 import BeautifulSoup
 
 # Function to scrape emails and URLs
-def scrape_emails_contacts_and_urls(user_url, max_urls=50):
+def scrape_emails_and_urls(user_url, max_urls=50):
     urls = deque([user_url])
     scraped_urls = set()
-    contacts = set()
     emails = set()
     count = 0
     while len(urls):
@@ -28,9 +27,7 @@ def scrape_emails_contacts_and_urls(user_url, max_urls=50):
         except (requests.exceptions.MissingSchema, requests.exceptions.ConnectionError):
             continue
         new_emails = set(re.findall(r"[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", response.text, re.I))
-        new_contacts = set(re.findall(r"\(([0-9]{3})\)([ .-]?)([0-9]{3})\2([0-9]{4})|([0-9]{3})([ .-]?)([0-9]{3})\5([0-9]{4})", response.text))
         emails.update(new_emails)
-        contacts.update(new_contacts)
         soup = BeautifulSoup(response.text, features="lxml")
         for anchor in soup.find_all("a"):
             link = anchor.attrs['href'] if 'href' in anchor.attrs else ''
@@ -40,8 +37,7 @@ def scrape_emails_contacts_and_urls(user_url, max_urls=50):
                 link = path + link
             if link not in urls and link not in scraped_urls:
                 urls.append(link)
-            
-    return emails, scraped_urls, contacts
+    return emails, scraped_urls
 
 # Function to convert data to CSV format
 @st.cache_data
@@ -49,29 +45,27 @@ def convert_to_csv(data):
     return pd.DataFrame(data).to_csv(index=False).encode('utf-8')
 
 # Streamlit interface
-st.title("EmailEagle - Best Email & contact Scraper")
+st.title("EmailEagle - Best Email and URL Scraper")
 user_url = st.text_input("Enter Main Target URL To Scan:")
-max_urls = st.text_input("Enter max_sub urls: (people normally use: 50)")
+max_urls = st.text_input("Enter max_sub urls: (default: 50)")
 
 if st.button("Start Scraping"):
-    with st.spinner("Scraping... It may take some time depending on the number of URLs.It's deep scanning so please be patient."):
-        emails, scraped_urls, contacts = scrape_emails_contacts_and_urls(user_url, max_urls)
-        max_length = max(len(emails), len(scraped_urls), len(contacts))
-        contacts = list(contacts)
+    with st.spinner("Scraping..."):
+        emails, scraped_urls = scrape_emails_and_urls(user_url, max_urls)
+        max_length = max(len(emails), len(scraped_urls))
         emails = list(emails)  # Convert set to list
         scraped_urls = list(scraped_urls)  # Convert set to list
         emails += [''] * (max_length - len(emails))
         scraped_urls += [''] * (max_length - len(scraped_urls))
-        contacts += [''] * (max_length - len(contacts))
-        data = {"URLs": scraped_urls, "Emails": emails, "Contacts": contacts}
+        data = {"Emails": emails, "URLs": scraped_urls}
         df = pd.DataFrame(data)
         csv_data = convert_to_csv(df)
         st.success("Scraping done!")
 
     st.download_button(
-        label="Download Emails, contacts and URLs as CSV",
+        label="Download Emails and URLs as CSV",
         data=csv_data,
-        file_name='EmailEagle.csv',
+        file_name='Url_email.csv',
         mime='text/csv',
         key='download-csv'
     )
