@@ -54,7 +54,7 @@ user_url = st.text_input("Enter Main Target URL To Scan:")
 max_urls = st.text_input("Enter max_sub urls: (people normally use: 50)")
 
 if st.button("Start Scraping"):
-    with st.spinner("Scraping..."):
+    with st.spinner("Scraping... It may take some time depending on the number of URLs.It's deep scanning so please be patient."):
         emails, scraped_urls, contacts = scrape_emails_contacts_and_urls(user_url, max_urls)
         max_length = max(len(emails), len(scraped_urls), len(contacts))
         contacts = list(contacts)
