@@ -50,7 +50,7 @@ user_url = st.text_input("Enter Main Target URL To Scan:")
 max_urls = st.text_input("Enter max_sub urls: (default: 50)")
 
 if st.button("Start Scraping"):
-    with st.spinner("Scraping..."):
+    with st.spinner("Scraping...It may take some time depending on the number of sub-URLs."):
         emails, scraped_urls = scrape_emails_and_urls(user_url, max_urls)
         max_length = max(len(emails), len(scraped_urls))
         emails = list(emails)  # Convert set to list
